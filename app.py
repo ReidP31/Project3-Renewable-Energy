@@ -36,49 +36,47 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-Renewable_History = Base.classes.renewable_history
-Consumption_History = Base.classes.consumption_history
+State_Energy = Base.classes.state_energy
+Us_Energy = Base.classes.us_energy
 
 # View routes
 @app.route("/")
 def landing_page():
-    return render_template("index.html")
-
-# @app.route("/map")
-# def map():
-#     return render_template("map.html", API_KEY=os.environ["API_KEY"])
-
-@app.route("/predictions")
-def plots():
-    return render_template("predictions.html")
+    return render_template("index.html", API_KEY=os.environ["API_KEY"])
 
 
-# API routes for data
-# renewable production data route
-@app.route("/api/renewable_history")
-def get_renewable_history_data():
+# data routes
+# state energy route
+@app.route("/api/state_energy")
+def get_state_energy_data():
     sel = [
-        Renewable_History.state,
-        Renewable_History.year,
-        Renewable_History.data
+        State_Energy.state,
+        State_Energy.year,
+        State_Energy.produced_renewable,
+        State_Energy.total_consumed,
+        State_Energy.population,
+        State_Energy.energy_price,
+        State_Energy.difference
     ]
 
-    results = db.session.query(*sel).all()
-    return jsonify(results)
+    state_results = db.session.query(*sel).all()
+    return jsonify(state_results)
 
-# consumption data route
-@app.route("/api/consumption_history")
-def get_consumption_history_data():
+# create us energy route
+@app.route("/api/us_energy")
+def get_us_energy_data():
     sel = [
-        Consumption_History.state,
-        Consumption_History.year,
-        Consumption_History.data
+        Us_Energy.year,
+        Us_Energy.produced_renewable,
+        Us_Energy.total_consumed,
+        Us_Energy.gdp,
+        Us_Energy.population,
+        Us_Energy.energy_price,
+        Us_Energy.difference
     ]
-
-    results = db.session.query(*sel).all()
-
-    return jsonify(results)
-
+    us_results = db.session.query(*sel).all()
+    return jsonify(us_results)
+    
 # run the app
 if __name__ == "__main__":
     app.run(debug=True)

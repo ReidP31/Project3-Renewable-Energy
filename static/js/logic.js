@@ -1,209 +1,304 @@
 
+// get our url for the data
+var url = "/api/us_energy";
 
+//  use d3 to get the data
+d3.json(url, function(data){
 
-var greenEnergyURL = "api/green_energy";
-var energyComparisonURL ="api/energy_comparison"
+    // grab values
+    var year = data.map(item => item.year)
+    var renewable_production = data.map(item => item.produced_renewable)
+    var total_consumed = data.map(item => item.total_consumed)
 
-function buildCharts(state) {
-    
-    d3.json(energyComparisonURL, ecData => {
-
-        // Create bar chart variables
-        var allStates = ecData.state;
-        var selState = allStates.filter(selectedState => selectedState == state);
-        var stateIndex = allStates.indexOf(selState[0])
-        var totalConsumption = ecData.total_energy_consumed_gwh[stateIndex]
-        var totalRenewable = ecData.renewable_total[stateIndex]
-        var energyDifference = ecData.energy_difference[stateIndex]
-
-        // Create the bar chart using Chart.js
-        var ctx = document.getElementById('barChart').getContext('2d');
-        var barChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [`Energy Comparison for ${selState}`],
-            datasets: [{
-                label: 'Tot. Consumed',
-                data: [totalConsumption],
-                backgroundColor: ['#ef3b2c'],
-                borderColor: ['#ef3b2c'],
-                borderWidth: 1
-            }, {
-                label: 'Tot. Renewable',
-                data: [totalRenewable],
-                backgroundColor: ['#74c476'],
-                borderColor: ['#74c476' ],
-                borderWidth: 1
-            }, {
-                label: 'Energy Diff.',
-                data: [energyDifference],
-                backgroundColor: ['#2b8cbe'],
-                borderColor: ['#2b8cbe'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: "Energy Comparison by State (Gwhs)",
-                fontSize: 18
-            },
-            legend: {
-                position: 'right',
-                alignment: 'center',
-                labels: {
-                    boxWidth: 10
-                },
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true 
-                        },
-                    scaleLabel: {
-                        display: true,
-                        labelString: "Giga-watt Hours (Gwhs)",
-                        padding: 10
-                    }
-                }]
-            },
-        }
-      });
-    return barChart;
-    });
-
-    d3.json(greenEnergyURL, geData => {
-        var allStates = geData.state;
-        var selState = allStates.filter(selectedState => selectedState == state);
-        var stateIndex = allStates.indexOf(selState[0])
-
-        var bioPowerGas = geData.biopower_gaseous[stateIndex];
-        var bioPowerSolid = geData.biopower_solid[stateIndex];
-        var cspSolar = geData.csp_solar[stateIndex];
-        var egsGeoThermal = geData.egs_geothermal[stateIndex];
-        var geoThermalHydrothermal = geData.geotermal_hydrothermal[stateIndex];
-        var hydropower = geData.hydropower[stateIndex];
-        var offshoreWind = geData.offshore_wind[stateIndex];
-        var onshoreWind = geData.onshore_wind[stateIndex];
-        var rooftopSolar = geData.rooftop_solar[stateIndex];
-        var ruralSolar = geData.rural_solar[stateIndex];
-        var urbanSolar = geData.urban_solar[stateIndex];
-
-        var pieDataArr = [
-
-            bioPowerGas,// 1
-            bioPowerSolid, // 2
-            cspSolar,// 3
-            egsGeoThermal,// 4
-            geoThermalHydrothermal, //5
-            hydropower, //6
-            offshoreWind, //7
-            onshoreWind, //8
-            rooftopSolar, //9
-            ruralSolar,//10
-            urbanSolar//11  
-
-        ]
-
-        var ctx = document.getElementById('pieChart').getContext('2d');
-        var myPieChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: pieDataArr,
-                    backgroundColor: [
-                        'rgb(191, 63, 63)',
-                        'rgb(86, 239, 35)',
-                        'rgb(239, 188, 35)',
-                        'rgb(35, 86, 239)',
-                        'rgb(239, 86, 35)',
-                        'rgb(188, 35, 239)',
-                        '#74c476',
-                        '#4eb3d3',
-                        '#E96C05',
-                        'rgba(235, 235, 9, 0.8)',
-                        'rgba(235, 122, 9, 0.8)'
-                        
-                    ]
-                }],
-                labels: [
-                    "Biopower - Gas",
-                    "Biopower - Solid",
-                    "CSP Solar",
-                    "EGS Geothermal",
-                    "Hydrothermal Geothermal",
-                    "Hydropower",
-                    "Wind - Offshore",
-                    "Wind - Onshore",
-                    "Solar - Rooftop",
-                    "Solar - Rural",
-                    "Solar - Urban"
-                ]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: "Renewables by State (Gwhs)",
-                    fontSize: 18
-                },
-                legend: {
-                    position: 'right',
-                    alignment: 'center',
-                    labels: {
-                        boxWidth: 10
-                    }
-                }
-            }
-        });
-        return myPieChart
-    });
-};
-
-
-// Populate the State DropDown & create initial plots 
-function init() {
-    // Grab a reference to the DropDown
-    var selector = d3.select("#selDataset");
-    // Grab the State Names and populate the dropdown
-    d3.json(energyComparisonURL, ecData => {
-        var states = ecData.state.sort(d3.ascending)
+    // create traces for renewable and total consumption 
+    var trace1 ={
+        x: year,
+        y: renewable_production,
+        type: "bar",
+        name: "Renewable Production",
+        marker: {color: 'rgb(26, 118, 255)'},
         
-        states.forEach( state => {
-            selector
-            .append("option")
-            .text(state)
-            .property("value", state);
-        });
-        // Create default chart
-        var defaultState = states[0];
-        buildCharts(defaultState);
+    };
 
-    });
-};
+    var trace2= {
+        x: year,
+        y:  total_consumed,
+        type: "bar",
+        name: "Total Energy Consumption",
+        marker: {color: 'rgb(55, 83, 109)'},
+    }
 
-function stateChange(newState) {
-    // Remove previous chart by removing canvas element
-    d3.select("#barChart").remove();
-    d3.select("#pieChart").remove();
-    // Add canvas elements back
-    d3.select("#plot1")
-    .append('canvas')
-    .attr('id','barChart')
-    .attr('width','400')
-    .attr('height','400');
+    // create the data array
+    data =  [trace1, trace2]
 
-    d3.select("#plot2")
-    .append('canvas')
-    .attr('id','pieChart')
-    .attr('width','400')
-    .attr('height','400');
+    //  set layout features
+    var layout = {
+        xaxis: {
+            title : "Year",
+            tickfont: {
+            size: 14,
+            color: 'rgb(107, 107, 107)'
+          }},
+        yaxis: {
+          title: 'Billion BTU',
+          titlefont: {
+            size: 16,
+            color: 'rgb(107, 107, 107)'
+          },
+          tickfont: {
+            size: 14,
+            color: 'rgb(107, 107, 107)'
+          }
+        },
+        legend: {
+          x: 0,
+          y: 1.5,
+          bgcolor: 'rgba(255, 255, 255, 0)',
+          bordercolor: 'rgba(255, 255, 255, 0)'
+        },
+        barmode: 'group',
+        bargap: 0.15,
+        bargroupgap: 0.1
+      };
 
-    // Fetch new data each time a new state is selected 
-    buildCharts(newState);
+      var config = {responsive: true}
+
+    // Render the plot to the div tag with id "plot"
+    Plotly.newPlot("plot1", data, layout, config);
+
+});
+
+
+// ///////////////////////////////////////////////////////////////
+
+//  select the data for differrence plot
+Plotly.d3.csv("static/csv/us_combined.csv", function(err, rows){
+  //  get the rows
+  function unpack(rows, key) {
+  return rows.map(function(row) { return row[key]; });
 }
+  //  unpack year annd difference values
+  var frames = []
+  var x = unpack(rows, 'Year')
+  var y = unpack(rows, 'Difference')
 
-init();
+  var n = 100;
+  for (var i = 0; i < n; i++) {
+    frames[i] = {data: [{x: [], y: []}]}
+    frames[i].data[0].x = x.slice(0, i+1);
+    frames[i].data[0].y = y.slice(0, i+1);
+  }
+  //  create the plot  and set features
+  Plotly.newPlot('plot', [{
+    x: frames[1].data[0].x,
+    y: frames[1].data[0].y,
+    fill: 'tozeroy',
+    type: 'scatter',
+    mode: 'lines',
+    line: {color: 'red'},
+  }], {
+    title: "Difference Between Renewable Production and Total Consumed Energy",
+    xaxis: {
+      title:"Year",
+      range: [
+        1970, 2030
+      ]
+    },
+    yaxis: {
+      title: "Difference(Bil. BTU)",
+      range: [
+        -110506126.9,
+        90
+      ]
+    },
+    updatemenus: [{
+      x: 0.1,
+      y: 0,
+      yanchor: "top",
+      xanchor: "right",
+      showactive: false,
+      direction: "left",
+      type: "buttons",
+      pad: {"t": 87, "r": 10},
+      buttons: [{
+        method: "animate",
+        args: [null, {
+          fromcurrent: true,
+          transition: {
+            duration: 0,
+          },
+          frame: {
+            duration: 40,
+            redraw: false
+          }
+        }],
+        label: "Play"
+      }, {
+        method: "animate",
+        args: [
+          [null],
+          {
+            mode: "immediate",
+            transition: {
+              duration: 0
+            },
+            frame: {
+              duration: 0,
+              redraw: false
+            }
+          }
+        ],
+        label: "Pause"
+      }]
+    }]
+  }).then(function() {
+    Plotly.addFrames('plot', frames);
+  });
+
+})
+
+
+// ////////////////////////////////////////
+
+// create plots  for states
+// select the states data
+
+var url_state = "/api/state_energy";
+
+d3.json(url_state, function(data){
+  console.log(data)
+  document.getElementById("selDataset").addEventListener("change", function() {
+    var value = this[this.selectedIndex].value;
+    getPlot(value, data);
+    getPlot2(value, data);
+  })
+  //  select and get dropdown variable
+  var dropdown = d3.select("#selDataset");
+
+  //  create states variable
+  var states = data.map(item => item.state)
+
+  console.log(states)
+
+  // select the data for the dropdwown menu
+  var filtered = states.filter(function(item, pos){
+    return states.indexOf(item)== pos; 
+  });
+  console.log(filtered)
+  //  add states to dropdown menu
+  filtered.forEach( state => {
+              dropdown
+              .append("option")
+              .text(state)
+              .property("value", state);
+          });
+  
+  // display default plots
+  getPlot(filtered[0], data);
+  getPlot2(filtered[0], data);
+
+// create a function that displays plots by selected states
+  function getPlot(value, data){
+    //  assign the variables 
+    var year = data.map(item => value === item.state && item.year );
+    var renewable = data.map(item => value === item.state && item.produced_renewable);
+    var consumed = data.map(item  => value == item.state && item.total_consumed);
+
+    console.log(renewable)
+  
+    // create the traces
+    var s_trace1 = {
+      x: year,
+      y: renewable,
+      fill: 'tonexty',
+      type: 'scatter',
+      name: "Renewable Production",
+      mode: 'lines',
+      line: {
+        dash: 'solid',
+        width: 8
+      },
+      marker: {color: 'green'}
+      
+    };
+
+    var s_trace2 = {
+      x: year,
+      y: consumed,
+      fill: 'tozeroy',
+      type: "scatteer",
+      name: "Total Consumption",
+      mode: 'lines',
+      // name: 'Solid',
+      line: {
+      dash: 'solid',
+      width: 8
+      },
+      marker: {color: 'orange'}
+    }
+
+    //  set the layout
+    var layout  = {
+      title: "Renewable Production vs Total Energy Consumption",
+      xaxis:{
+        title:"Year",
+        tickmode: "linear",
+        dtick: 10
+      },
+      yaxis:{
+        title:"Billion BTU"
+      }
+    
+    };
+    
+    //  create the state_data varriable
+    state_data = [s_trace1, s_trace2];
+    
+    // create the plot
+    Plotly.newPlot("plot2",state_data, layout);
+  }
+
+  // create the second function that gets the price plot for the states
+  function getPlot2(value, data){
+    
+    var year = data.map(item => value === item.state && item.year );
+    var population = data.map(item => value === item.state && item.population);
+    var price = data.map(item  => value === item.state && item.energy_price);
+
+    // set the trace variable
+    var s_trace4 = {
+      x: year,
+      y: price,
+      name: "Price",
+      mode: 'lines',
+      line: {
+      dash: 'solid',
+      width: 6
+      },
+      marker:{
+        color: "rgb(55, 83, 109)"
+      }
+    };
+
+    //  set the layout for the plot
+    var layout  = {
+      title: "Average Price",
+      xaxis:{
+        title:"Year"
+      },
+      yaxis:{
+        title:"$/million BTU"
+      },
+      
+    };
+    
+    state_data = [s_trace4];
+    //  create the plot
+    Plotly.newPlot("plot3",state_data, layout);
+  };
+  
+}); 
 
 
 
-
+  
