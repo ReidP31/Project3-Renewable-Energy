@@ -1,21 +1,15 @@
 # Renewable Energy
 
+
 ![US-Renewable-Energy-Prediction](Images/US_Renewable_Energy_map.png)
 
 
-### Data Sources
-* https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#Consumption
-
-* https://www.eia.gov/state/seds/seds-data-complete.php
-
-* https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#PricesExpenditures 
 
 
 ### Description:
 
-Machine learning can increase the value of renewable energy. 
+For this project, we used machine learning to predict the difference between a state's energy demand and its renewable energy production 1, 5, and 10 years from the present. 
 
-Using historical data that is available between the years 1969-2017 for renewable production and consumption values: Can we make accurate predictions about how the values will change for each state?
 
 ### Questions:
 
@@ -36,6 +30,14 @@ Using historical data that is available between the years 1969-2017 for renewabl
 * Use Linear Regression model for machine learning.
 
 * Use D3, Plotly and Leaflet to visualize the data. 
+
+
+### Data Sources
+* https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#Consumption
+
+* https://www.eia.gov/state/seds/seds-data-complete.php
+
+* https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#PricesExpenditures 
 
 
 ## Development Team
