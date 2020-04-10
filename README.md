@@ -11,11 +11,7 @@
 For this project, we used machine learning to predict the difference between a state's energy demand and its renewable energy production 1, 5, and 10 years from the present. 
 
 
-### Questions:
 
-* How renewable energy production will change in the US by state?
- 
-* Predict a state's ability to meet its Energy Consumption needs with Renewable Energy Production.
 
 ## Analysis
 
