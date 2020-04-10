@@ -12,7 +12,7 @@ For this project, we used machine learning to predict the difference between a s
 
 ### Analysis
 
-Although renewable energy in the United States was predicted to increase for most states over a 10 year period from 2020 to 2030, each states' energy demand far outstripped its capacity to meet its energy needs with its renewable energy production. Possible expansions of this project include investigating the factors that lead to renewable energy production and overal energy demand and analysing key factors that are causing such a gap between renewable energy production and overall energy demand.
+Although renewable energy in the United States was predicted to increase for most states over a 10 year period from 2020 to 2030, each states' energy demand far outstripped its capacity to meet its energy needs with its renewable energy production. Possible expansions of this project include investigating the factors that lead to renewable energy production and overal energy demand and analyzing key factors that are causing such a gap between renewable energy production and overall energy demand.
 
 <br/>
 
