@@ -2,29 +2,17 @@
 
 ![US-Renewable-Energy-Prediction](Images/US_Renewable_Energy_map.png)  
   
-  
-  
+<br/>
 
 ### Description:
 
 For this project, we used machine learning to predict the difference between a state's energy demand and its renewable energy production 1, 5, and 10 years from the present. 
 
+<br/>
 
+### Analysis
 
-
-## Analysis
-
-* Clean and modify the data using Pandas and Jupyter Notebook.
-
-* Use Heroku and PostgreSQL as the database.
-
-* Use Python as the server side language, Flask as the web server and SQLAlchemy as the ORM.
-
-* Use HTML, CSS and JavaScript on the front end.
-
-* Use Linear Regression model for machine learning.
-
-* Use D3, Plotly and Leaflet to visualize the data. 
+Although renewable energy in the United States was predicted to increase for most states over a 10 year period from 2020 to 2030, energy demand far outstripped each states' capacity to meet its energy needs with its renewable energy production. Possible expansions of this project include investigating the factors that lead to renewable energy production and overal energy demand and analysing key factors that are causing such a gap between renewable energy production and overall energy demand.
 
 
 ### Data Sources
