@@ -1,12 +1,10 @@
 # US Renewable Energy Prediction
-<br/>
-<br/>
-<br/>
 
 ![US-Renewable-Energy-Prediction](Images/US_Renewable_Energy_map.png)
 
-
-
+<br/>
+<br/>
+<br/>
 
 ### Description:
 
