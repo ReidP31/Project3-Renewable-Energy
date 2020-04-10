@@ -16,15 +16,6 @@ Although renewable energy in the United States was predicted to increase for mos
 
 <br/>
 
-### Data Sources
-* https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#Consumption
-
-* https://www.eia.gov/state/seds/seds-data-complete.php
-
-* https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#PricesExpenditures 
-
-<br/>
-
 ### Development Team
 * Nadire Gokcehan - [@nadireag](https://github.com/nadireag)
 * Reid Powell - [@ReidP31](https://github.com/ReidP31)
