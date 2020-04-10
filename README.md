@@ -2,6 +2,7 @@
 <br/>
 <br/>
 <br/>
+
 ![US-Renewable-Energy-Prediction](Images/US_Renewable_Energy_map.png)
 
 
