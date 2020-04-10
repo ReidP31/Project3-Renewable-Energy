@@ -14,6 +14,7 @@ For this project, we used machine learning to predict the difference between a s
 
 Although renewable energy in the United States was predicted to increase for most states over a 10 year period from 2020 to 2030, energy demand far outstripped each states' capacity to meet its energy needs with its renewable energy production. Possible expansions of this project include investigating the factors that lead to renewable energy production and overal energy demand and analysing key factors that are causing such a gap between renewable energy production and overall energy demand.
 
+<br/>
 
 ### Data Sources
 * https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#Consumption
@@ -22,8 +23,9 @@ Although renewable energy in the United States was predicted to increase for mos
 
 * https://www.eia.gov/state/seds/seds-data-complete.php?sid=US#PricesExpenditures 
 
+<br/>
 
-## Development Team
+### Development Team
 * Nadire Gokcehan - [@nadireag](https://github.com/nadireag)
 * Reid Powell - [@ReidP31](https://github.com/ReidP31)
 * Saba Tass - [@Saba](https://github.com/SabaTass)
