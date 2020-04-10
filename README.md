@@ -1,6 +1,6 @@
 # Renewable Energy
 
-![US-Renewable-Energy-Prediction](Images/US_Renewable_Energy_map_to_mars.png)
+![US-Renewable-Energy-Prediction](Images/US_Renewable_Energy_map.png)
 
 
 ### Data Sources
